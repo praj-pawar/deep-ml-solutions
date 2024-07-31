@@ -1,6 +1,6 @@
 # deep-ml-solutions
 
-welcome, here you'll find my daily solutions for various ML coding challenges
+welcome, here you'll find my daily solutions for various ml coding challenges
 
 ### check out the challenges: [deep-ml.com](http://deep-ml.com)
 
