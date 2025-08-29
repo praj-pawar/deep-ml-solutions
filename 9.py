@@ -7,6 +7,6 @@ def matrixmul(a: list[list[int | float]],
     A = np.array(a)
     B = np.array(b)
 
-    if len(a[0]) != len(b)
-    return -1
-    return A @ B
+    if len(a[0]) != len(b):
+        return -1
+        return A @ B
