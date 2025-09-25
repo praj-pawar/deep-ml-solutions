@@ -11,18 +11,32 @@ def k_means_clustering(points, k, initial_centroids, max_iterations):
             clusters[nearest].append(p)
 
         # update centroids
-        new_centroids = []
-        for cluster, old in zip(clusters, centroids):
-            if cluster:
-                new_centroid = [sum(dim) / len(cluster)
-                                for dim in zip(*cluster)]
-            else:  # keep old centroid if cluster empty
-                new_centroid = old
-            new_centroids.append(new_centroid)
+        # update centroids
+	new_centroids = []
 
-        if new_centroids == centroids:  # convergence
-            break
-        centroids = new_centroids
+	for cluster_index in range(len(clusters)):
+			cluster = clusters[cluster_index]
+			old = centroids[cluster_index]
+
+			if len(cluster) == 0:
+				# if cluster is empty, keep old centroid
+				new_centroids.append(old)
+			else:
+				# compute mean for each dimension
+				dimension_sums = [0] * len(cluster[0])
+				for point in cluster:
+					for i in range(len(point)):
+						dimension_sums[i] += point[i]
+				# divide by number of points to get mean
+				new_centroid = [dimension_sums[i] /
+                    len(cluster) for i in range(len(cluster[0]))]
+				new_centroids.append(new_centroid)
+
+		# check for convergence
+		if new_centroids == centroids:
+			break
+
+		centroids = new_centroids
 
     # round results
-        return [tuple(round(x, 4) for x in c) for c in centroids]
+	return [tuple(round(x, 4) for x in c) for c in centroids]
