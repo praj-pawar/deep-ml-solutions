@@ -1,16 +1,24 @@
-import math
+import numpy as np
 
 
-def single_neuron_model(features, labels, weights, bias):
-    probabilities = []
-    for feature_vector in features:
-        z = sum(weight * feature for weight,
-                feature in zip(weights, feature_vector)) + bias
-        prob = 1 / (1 + math.exp(-z))
-        probabilities.append(round(prob, 4))
+def single_neuron_model(features: list[list[float]],
+                        labels: list[int],
+                        weights: list[float],
+                        bias: float) -> (list[float], float):
+    features = np.array(features)
+    weights = np.array(weights)
 
-    mse = sum((prob - label) ** 2 for prob,
-              label in zip(probabilities, labels)) / len(labels)
-    mse = round(mse, 4)
+    # Linear combination
+    res = features @ weights + bias
 
-    return probabilities, mse
+    # Sigmoid activation
+    act = 1 / (1 + np.exp(-res))
+
+    # Mean squared error
+    mse = np.mean([(i - t) ** 2 for i, t in zip(act, labels)])
+
+    # Round results
+    act = [round(float(a), 4) for a in act]
+    mse = round(float(mse), 4)
+
+    return act, mse
