@@ -8,14 +8,13 @@ def rnn_forward(input_sequence: list[list[float]],
     
     # Convert everything to numpy arrays
     input_seq=np.array(input_sequence,dtype=float)
-    init_hs=np.array(initial_hidden_state,dtype=float)
+    hs=np.array(initial_hidden_state,dtype=float)
     wx=np.array(Wx,dtype=float)
     wh=np.array(Wh,dtype=float)
     b=np.array(b,dtype=float)
 
     for x in input_seq:
-        hs=np.tanh(wx @ x + wh @ init_hs +b)
-        init_hs=hs
+        hs=np.tanh(wx @ x + wh @ hs +b)
     
     return np.round(hs,4).tolist()
    
